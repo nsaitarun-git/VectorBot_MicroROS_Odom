@@ -4,10 +4,10 @@
 #include <Arduino.h>
 #include <motor_control.h>
 
-extern int direction;
 extern const int mtr_power;
-extern void drive_straight(int dir);
+extern int direction;
 
+void encoder_init(void);
 void create_timer(void);
 
 #endif
