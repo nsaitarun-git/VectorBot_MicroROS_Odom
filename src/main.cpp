@@ -6,14 +6,18 @@
 #include <ros_communication.h>
 #include <drive_timer_fcn.h>
 
-// OLED display settings
+// OLED display address
 #define i2c_Address 0x3c
 
-// Motor speed
-const int mtr_power = 100;
+// Direction flags
+const int FORWARD_DIR = 1;
+const int BACKWARD_DIR = 2;
+const int LEFT_DIR = 3;
+const int RIGHT_DIR = 4;
 
-// Control motor direction
-int direction = 0;
+// Globals
+const int mtr_power = 110; // Motor speed (0-255)
+int direction = 0;         // Control motor direction
 
 // Auto-relod software timer
 static TimerHandle_t drive_timer = NULL;

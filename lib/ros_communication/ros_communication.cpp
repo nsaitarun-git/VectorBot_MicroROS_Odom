@@ -195,32 +195,32 @@ void RosCommunication::cmd_vel_callback(const void *msg_recv)
     if (linear_vel > 0)
     {
         // Serial.println("forward");J
-        direction = 1;
-        displayArrow("forward");
+        direction = FORWARD_DIR;
+        displayArrow(FORWARD_DIR);
     }
     else if (linear_vel < 0)
     {
         // Serial.println("backward");
-        direction = 2;
-        displayArrow("backward");
+        direction = BACKWARD_DIR;
+        displayArrow(BACKWARD_DIR);
     }
     else if (angular_vel > 0)
     {
         // Serial.println("left");
-        direction = 3;
-        displayArrow("left");
+        direction = LEFT_DIR;
+        displayArrow(LEFT_DIR);
     }
     else if (angular_vel < 0)
     {
         // Serial.println("right");
-        direction = 4;
-        displayArrow("right");
+        direction = RIGHT_DIR;
+        displayArrow(RIGHT_DIR);
     }
     else
     {
         // Serial.println("stop");
         direction = 0;
-        displayArrow("stop");
+        displayArrow(0);
     }
 }
 

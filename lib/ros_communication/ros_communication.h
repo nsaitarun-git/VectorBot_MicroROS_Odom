@@ -15,6 +15,11 @@
 #if !defined(MICRO_ROS_TRANSPORT_ARDUINO_WIFI)
 #endif
 
+extern const int FORWARD_DIR;
+extern const int BACKWARD_DIR;
+extern const int LEFT_DIR;
+extern const int RIGHT_DIR;
+
 extern volatile unsigned long enc_left;
 extern volatile unsigned long enc_right;
 extern int direction;

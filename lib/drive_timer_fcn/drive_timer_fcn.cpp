@@ -1,8 +1,8 @@
 #include <drive_timer_fcn.h>
 
 // Encoder pins
-const int enc_left_pin = 13;  // Motor A
-const int enc_right_pin = 15; // Motor B
+const int enc_left_pin = 13;  // Left Motor
+const int enc_right_pin = 15; // Right Motor
 
 // Encoder ticks ISR
 volatile unsigned long enc_left = 0;
@@ -24,6 +24,7 @@ unsigned long enc_right_prev = 0;
 
 // Adjust motor power
 const int mtr_offset = 5;
+const int left_mtr_offset = -12;
 
 // Auto-relod software timer
 static TimerHandle_t drive_timer = NULL;
@@ -65,20 +66,30 @@ void encoder_init(void)
 }
 
 // Drive robot straight with motor feedback
-void drive_straight(int dir)
+void drive(int dir)
 {
     // Sample number of encoder ticks
     num_ticks_left = enc_left;
     num_ticks_right = enc_right;
 
+    power_left -= left_mtr_offset; // Reduce left motor power
+
     // Set direction (reduce left wheel power)
-    if (dir == 1)
+    if (dir == FORWARD_DIR)
     {
-        forward(power_left - 12, power_right);
+        forward(power_left, power_right);
     }
-    else
+    else if (dir == BACKWARD_DIR)
     {
-        back(power_left - 12, power_right);
+        back(power_left, power_right);
+    }
+    else if (dir == LEFT_DIR)
+    {
+        left(power_left, power_right);
+    }
+    else if (dir == RIGHT_DIR)
+    {
+        right(power_left, power_right);
     }
 
     // Number of ticks counted since last time
@@ -109,21 +120,21 @@ void drive_timer_callback(TimerHandle_t xTimer)
 {
 
     // Use flag to control motor direction
-    if (direction == 1)
+    if (direction == FORWARD_DIR)
     {
-        drive_straight(1);
+        drive(FORWARD_DIR);
     }
-    else if (direction == 2)
+    else if (direction == BACKWARD_DIR)
     {
-        drive_straight(-1);
+        drive(BACKWARD_DIR);
     }
-    else if (direction == 3)
+    else if (direction == LEFT_DIR)
     {
-        left(mtr_power, mtr_power);
+        drive(LEFT_DIR);
     }
-    else if (direction == 4)
+    else if (direction == RIGHT_DIR)
     {
-        right(mtr_power, mtr_power);
+        drive(RIGHT_DIR);
     }
     else
     {
@@ -137,7 +148,7 @@ void create_timer(void)
 
     drive_timer = xTimerCreate(
         "Drive Straight Timer",  // Name of timer
-        20 / portTICK_PERIOD_MS, // Period of timer (in ticks), period 0.25s
+        10 / portTICK_PERIOD_MS, // Period of timer (in ticks)
         pdTRUE,                  // Auto-reload
         (void *)1,               // Timer ID
         drive_timer_callback);   // Callback function

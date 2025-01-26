@@ -131,21 +131,21 @@ void drawStopCircle(Adafruit_SH1106G &display)
 }
 
 /************* Main *************/
-void displayArrow(String request)
+void displayArrow(const int request)
 {
-    if (request == "right")
+    if (request == RIGHT_DIR)
     {
         drawRightArrow(display);
     }
-    else if (request == "left")
+    else if (request == LEFT_DIR)
     {
         drawLeftArrow(display);
     }
-    else if (request == "forward")
+    else if (request == FORWARD_DIR)
     {
         drawForwardArrow(display);
     }
-    else if (request == "backward")
+    else if (request == BACKWARD_DIR)
     {
         drawBackwardArrow(display);
     }
