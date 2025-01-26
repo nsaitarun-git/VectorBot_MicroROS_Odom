@@ -72,8 +72,6 @@ void drive(int dir)
     num_ticks_left = enc_left;
     num_ticks_right = enc_right;
 
-    power_left -= left_mtr_offset; // Reduce left motor power
-
     // Set direction (reduce left wheel power)
     if (dir == FORWARD_DIR)
     {

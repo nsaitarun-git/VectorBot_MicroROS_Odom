@@ -16,7 +16,7 @@ const int LEFT_DIR = 3;
 const int RIGHT_DIR = 4;
 
 // Globals
-const int mtr_power = 110; // Motor speed (0-255)
+const int mtr_power = 100; // Motor speed (0-255)
 int direction = 0;         // Control motor direction
 
 // Auto-relod software timer
